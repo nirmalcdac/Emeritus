@@ -1,0 +1,16 @@
+package com.emeritus.emeritus;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class EmeritusApplication implements CommandLineRunner {
+    public static void main(String[] args) {
+        SpringApplication.run(EmeritusApplication.class, args);
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+    }
+}
