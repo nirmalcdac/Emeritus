@@ -37,8 +37,6 @@ public class AppUserServiceImpl implements AppUserService {
     public AppUser updateUser(String user_id, AppUser appUserDetails) {
         AppUser updateAppUser = appUserRepository.findById(user_id)
                 .orElseThrow(() -> new ResourceNotFoundException("App User not found for given id" + user_id));
-        updateAppUser.setAppUserFirstName(appUserDetails.getAppUserFirstName());
-        updateAppUser.setAppUserLastName(appUserDetails.getAppUserLastName());
         updateAppUser.setAppUserPassword(appUserDetails.getAppUserPassword());
         updateAppUser.setAppUserRole(appUserDetails.getAppUserRole());
         updateAppUser.setCreatedBy(appUserDetails.getCreatedBy());

@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -26,7 +25,6 @@ public class AppUserController {
     }
 
     @PostMapping("/appUser")
-    @RolesAllowed({ "ROLE_VIEWER", "ROLE_EDITOR" })
     public AppUser createUser(@RequestBody AppUser appUser) {
         return appUserService.createUser(appUser);
     }

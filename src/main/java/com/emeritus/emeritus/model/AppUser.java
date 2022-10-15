@@ -21,18 +21,12 @@ import java.util.UUID;
 public class AppUser {
     @Id
     @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "app_user_id")
     private UUID appUserId;
 
-    @Column(name = "app_user_first_name")
-    private String appUserFirstName;
-
-    @Column(name = "app_user_last_name")
-    private String appUserLastName;
+    @Column(name = "app_user_name")
+    private String userName;
 
     @JsonIgnore
     @Column(name = "app_user_password")
