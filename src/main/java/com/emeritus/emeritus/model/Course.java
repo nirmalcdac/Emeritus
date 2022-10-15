@@ -1,5 +1,4 @@
 package com.emeritus.emeritus.model;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,39 +6,31 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "app_user")
-public class AppUser {
+@Table(name = "course")
+public class Course {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(name = "app_user_id")
-    private UUID appUserId;
+    @Column(name = "course_id")
+    private UUID courseId;
 
-    @Column(name = "app_user_first_name")
-    private String appUserFirstName;
+    @Column(name = "course_name")
+    private String courseName;
 
-    @Column(name = "app_user_last_name")
-    private String appUserLastName;
-
-    @JsonIgnore
-    @Column(name = "app_user_password")
-    private String appUserPassword;
-
-    @Column(name = "app_user_role")
-    private String appUserRole;
+    @OneToOne
+    @JoinColumn(name = "Instructor_id")
+    private Instructor instructor;
 
     @Column(name = "is_active")
     private String isActive;
@@ -61,5 +52,6 @@ public class AppUser {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
 
 }

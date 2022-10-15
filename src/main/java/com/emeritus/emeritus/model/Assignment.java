@@ -17,29 +17,26 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "app_user")
-public class AppUser {
+@Table(name = "assignment")
+public class Assignment {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(name = "app_user_id")
-    private UUID appUserId;
+    @Column(name = "assignment_id")
+    private UUID assignmentId;
 
-    @Column(name = "app_user_first_name")
-    private String appUserFirstName;
+    @Column(name = "assignment_name")
+    private String assignmentName;
 
-    @Column(name = "app_user_last_name")
-    private String appUserLastName;
+    @Column(name = "assignment_content")
+    private String assignmentContent;
 
-    @JsonIgnore
-    @Column(name = "app_user_password")
-    private String appUserPassword;
-
-    @Column(name = "app_user_role")
-    private String appUserRole;
+    @OneToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
 
     @Column(name = "is_active")
     private String isActive;
@@ -61,5 +58,6 @@ public class AppUser {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
 
 }

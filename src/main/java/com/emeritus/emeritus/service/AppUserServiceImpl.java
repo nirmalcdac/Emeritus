@@ -28,28 +28,32 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public AppUser getUserById(long id) {
-        return appUserRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("App User not found for given id" + id));
+    public AppUser getUserById(String user_id) {
+        return appUserRepository.findById(user_id)
+                .orElseThrow(() -> new ResourceNotFoundException("App User not found for given id" + user_id));
     }
 
     @Override
-    public AppUser updateUser(long id, AppUser appUserDetails) {
-        AppUser updateAppUser = appUserRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("App User not found for given id" + id));
-        updateAppUser.setUserName(appUserDetails.getUserName());
-        updateAppUser.setUserPassword(appUserDetails.getUserPassword());
+    public AppUser updateUser(String user_id, AppUser appUserDetails) {
+        AppUser updateAppUser = appUserRepository.findById(user_id)
+                .orElseThrow(() -> new ResourceNotFoundException("App User not found for given id" + user_id));
+        updateAppUser.setAppUserFirstName(appUserDetails.getAppUserFirstName());
+        updateAppUser.setAppUserLastName(appUserDetails.getAppUserLastName());
+        updateAppUser.setAppUserPassword(appUserDetails.getAppUserPassword());
+        updateAppUser.setAppUserRole(appUserDetails.getAppUserRole());
         updateAppUser.setCreatedBy(appUserDetails.getCreatedBy());
         updateAppUser.setUpdatedBy(appUserDetails.getUpdatedBy());
+        updateAppUser.setCreatedAt(appUserDetails.getCreatedAt());
+        updateAppUser.setUpdatedAt(appUserDetails.getUpdatedAt());
         updateAppUser.setIsActive(appUserDetails.getIsActive());
         appUserRepository.save(updateAppUser);
         return updateAppUser;
     }
 
     @Override
-    public void deleteUser(long id) {
-        AppUser deleteAppUser = appUserRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("App User not found for given id" + id));
+    public void deleteUser(String user_id) {
+        AppUser deleteAppUser = appUserRepository.findById(user_id)
+                .orElseThrow(() -> new ResourceNotFoundException("App User not found for given id" + user_id));
         appUserRepository.delete(deleteAppUser);
     }
 }

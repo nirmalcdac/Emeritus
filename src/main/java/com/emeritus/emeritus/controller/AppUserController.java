@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -25,25 +26,26 @@ public class AppUserController {
     }
 
     @PostMapping("/appUser")
+    @RolesAllowed({ "ROLE_VIEWER", "ROLE_EDITOR" })
     public AppUser createUser(@RequestBody AppUser appUser) {
         return appUserService.createUser(appUser);
     }
 
     @GetMapping("/appUser/{id}")
-    public ResponseEntity<AppUser> getUserById(@PathVariable long id) {
-        AppUser appUser = appUserService.getUserById(id);
+    public ResponseEntity<AppUser> getUserById(@PathVariable String userId) {
+        AppUser appUser = appUserService.getUserById(userId);
         return ResponseEntity.ok(appUser);
     }
 
     @PutMapping("/appUser/{id}")
-    public ResponseEntity<AppUser> updateUser(@PathVariable long id, @RequestBody AppUser appUserDetails) {
-        AppUser appUser = appUserService.updateUser(id, appUserDetails);
+    public ResponseEntity<AppUser> updateUser(@PathVariable String userId, @RequestBody AppUser appUserDetails) {
+        AppUser appUser = appUserService.updateUser(userId, appUserDetails);
         return ResponseEntity.ok(appUser);
     }
 
     @DeleteMapping("/appUser/{id}")
-    public ResponseEntity<HttpStatus> deleteUser(@PathVariable long id) {
-        appUserService.deleteUser(id);
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable String userId) {
+        appUserService.deleteUser(userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

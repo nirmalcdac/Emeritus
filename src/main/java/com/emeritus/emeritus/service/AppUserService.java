@@ -9,9 +9,9 @@ public interface AppUserService {
 
     AppUser createUser(AppUser appUser);
 
-    AppUser getUserById(long id);
+    AppUser getUserById(String userId);
 
-    AppUser updateUser(long id, AppUser appUserDetails);
+    AppUser updateUser(String userId, AppUser appUserDetails);
 
-    void deleteUser(long id);
+    void deleteUser(String userId);
 }
