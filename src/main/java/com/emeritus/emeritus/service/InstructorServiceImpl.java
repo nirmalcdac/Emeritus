@@ -1,8 +1,12 @@
 package com.emeritus.emeritus.service;
 
+import com.emeritus.emeritus.exception.ResourceNotFoundException;
+import com.emeritus.emeritus.model.Instructor;
 import com.emeritus.emeritus.repository.InstructorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class InstructorServiceImpl implements InstructorService {
@@ -14,4 +18,42 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
 
+    @Override
+    public List<Instructor> getAllInstructor() {
+        return instructorRepository.findAll();
+    }
+
+    @Override
+    public Instructor createInstructor(Instructor instructor) {
+        return instructorRepository.save(instructor);
+    }
+
+    @Override
+    public Instructor getInstructorById(String instructorId) {
+        return instructorRepository.findById(instructorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Instructor not found for given id" + instructorId));
+    }
+
+    @Override
+    public Instructor updateInstructor(String instructorId, Instructor instructorDetails) {
+        Instructor updateInstructor = instructorRepository.findById(instructorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Instructor not found for given id" + instructorId));
+        updateInstructor.setInstructorFirstName(instructorDetails.getInstructorFirstName());
+        updateInstructor.setInstructorFirstName(instructorDetails.getInstructorLastName());
+        updateInstructor.setAppUser(instructorDetails.getAppUser());
+        updateInstructor.setCreatedBy(instructorDetails.getCreatedBy());
+        updateInstructor.setUpdatedBy(instructorDetails.getUpdatedBy());
+        updateInstructor.setCreatedAt(instructorDetails.getCreatedAt());
+        updateInstructor.setUpdatedAt(instructorDetails.getUpdatedAt());
+        updateInstructor.setIsActive(instructorDetails.getIsActive());
+        instructorRepository.save(updateInstructor);
+        return updateInstructor;
+    }
+
+    @Override
+    public void deleteInstructor(String instructorId) {
+        Instructor deleteInstructor = instructorRepository.findById(instructorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Instructor not found for given id" + instructorId));
+        instructorRepository.delete(deleteInstructor);
+    }
 }

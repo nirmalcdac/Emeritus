@@ -1,17 +1,58 @@
 package com.emeritus.emeritus.controller;
 
+import com.emeritus.emeritus.model.Student;
+import com.emeritus.emeritus.model.StudentCourseMapping;
+import com.emeritus.emeritus.service.SCMServiceImpl;
 import com.emeritus.emeritus.service.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
 public class StudentController {
     @Autowired
     private final StudentServiceImpl studentService;
+    private final SCMServiceImpl scmService;
 
-    public StudentController(StudentServiceImpl studentService) {
+    public StudentController(StudentServiceImpl studentService, SCMServiceImpl scmService) {
         this.studentService = studentService;
+        this.scmService = scmService;
+    }
+
+    @GetMapping("/student")
+    public List<Student> getAllStudent() {
+        return studentService.getAllStudent();
+    }
+
+    @PostMapping("/student")
+    public Student createUser(@RequestBody Student student) {
+        return studentService.createStudent(student);
+    }
+
+    @GetMapping("/student/{id}")
+    public ResponseEntity<Student> getUserById(@PathVariable String userId) {
+        Student student = studentService.getStudentById(userId);
+        return ResponseEntity.ok(student);
+    }
+
+    @PutMapping("/student/{id}")
+    public ResponseEntity<Student> updateUser(@PathVariable String studentId, @RequestBody Student studentDetails) {
+        Student student = studentService.updateStudent(studentId, studentDetails);
+        return ResponseEntity.ok(student);
+    }
+
+    @DeleteMapping("/student/{id}")
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable String studentId) {
+        studentService.deleteStudent(studentId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/studentCourseMapping")
+    public List<StudentCourseMapping> getAllStudentCourseMapping() {
+        return scmService.getAllStudentCourseMapping();
     }
 }
