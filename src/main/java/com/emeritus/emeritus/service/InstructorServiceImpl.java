@@ -20,7 +20,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public List<Instructor> getAllInstructor() {
-        return instructorRepository.findAll();
+        return instructorRepository.findByActiveTrue();
     }
 
     @Override
@@ -45,7 +45,7 @@ public class InstructorServiceImpl implements InstructorService {
         updateInstructor.setUpdatedBy(instructorDetails.getUpdatedBy());
         updateInstructor.setCreatedAt(instructorDetails.getCreatedAt());
         updateInstructor.setUpdatedAt(instructorDetails.getUpdatedAt());
-        updateInstructor.setIsActive(instructorDetails.getIsActive());
+        updateInstructor.setActive(instructorDetails.getActive());
         instructorRepository.save(updateInstructor);
         return updateInstructor;
     }
@@ -54,6 +54,7 @@ public class InstructorServiceImpl implements InstructorService {
     public void deleteInstructor(String instructorId) {
         Instructor deleteInstructor = instructorRepository.findById(instructorId)
                 .orElseThrow(() -> new ResourceNotFoundException("Instructor not found for given id" + instructorId));
-        instructorRepository.delete(deleteInstructor);
+        deleteInstructor.setActive(false);
+        instructorRepository.save(deleteInstructor);
     }
 }

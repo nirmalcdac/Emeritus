@@ -32,8 +32,8 @@ public class Course {
     @JoinColumn(name = "Instructor_id")
     private Instructor instructor;
 
-    @Column(name = "is_active")
-    private String isActive;
+    @Column(name = "active")
+    private Boolean active;
 
     @JsonIgnore
     @Column(name = "created_by")

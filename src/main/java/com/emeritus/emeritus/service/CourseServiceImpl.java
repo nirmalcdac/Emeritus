@@ -19,7 +19,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getAllCourse() {
-        return courseRepository.findAll();
+        return courseRepository.findByActiveTrue();
     }
 
     @Override
@@ -42,7 +42,7 @@ public class CourseServiceImpl implements CourseService {
         updateCourse.setUpdatedBy(courseDetails.getUpdatedBy());
         updateCourse.setCreatedAt(courseDetails.getCreatedAt());
         updateCourse.setUpdatedAt(courseDetails.getUpdatedAt());
-        updateCourse.setIsActive(courseDetails.getIsActive());
+        updateCourse.setActive(courseDetails.getActive());
         courseRepository.save(updateCourse);
         return updateCourse;
     }
@@ -51,6 +51,7 @@ public class CourseServiceImpl implements CourseService {
     public void deleteCourse(String course_id) {
         Course deleteCourse = courseRepository.findById(course_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Course not found for given id" + course_id));
-        courseRepository.delete(deleteCourse);
+        deleteCourse.setActive(false);
+        courseRepository.save(deleteCourse);
     }
 }

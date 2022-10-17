@@ -19,7 +19,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<Student> getAllStudent() {
-        return studentRepository.findAll();
+        return studentRepository.findByActiveTrue();
     }
 
     @Override
@@ -32,6 +32,7 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found for given id" + studentId));
     }
+
     @Override
     public Student updateStudent(String studentId, Student studentDetails) {
         Student updateStudent = studentRepository.findById(studentId)
@@ -43,7 +44,7 @@ public class StudentServiceImpl implements StudentService {
         updateStudent.setUpdatedBy(studentDetails.getUpdatedBy());
         updateStudent.setCreatedAt(studentDetails.getCreatedAt());
         updateStudent.setUpdatedAt(studentDetails.getUpdatedAt());
-        updateStudent.setIsActive(studentDetails.getIsActive());
+        updateStudent.setActive(studentDetails.getActive());
         studentRepository.save(updateStudent);
         return updateStudent;
     }
@@ -52,6 +53,7 @@ public class StudentServiceImpl implements StudentService {
     public void deleteStudent(String studentId) {
         Student deleteStudent = studentRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found for given id" + studentId));
-        studentRepository.delete(deleteStudent);
+        deleteStudent.setActive(false);
+        studentRepository.save(deleteStudent);
     }
 }

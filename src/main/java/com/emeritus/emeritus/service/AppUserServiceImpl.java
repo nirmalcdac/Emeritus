@@ -19,7 +19,7 @@ public class AppUserServiceImpl implements AppUserService {
 
     @Override
     public List<AppUser> getAllUsers() {
-        return appUserRepository.findAll();
+        return appUserRepository.findByActiveTrue();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class AppUserServiceImpl implements AppUserService {
         updateAppUser.setUpdatedBy(appUserDetails.getUpdatedBy());
         updateAppUser.setCreatedAt(appUserDetails.getCreatedAt());
         updateAppUser.setUpdatedAt(appUserDetails.getUpdatedAt());
-        updateAppUser.setIsActive(appUserDetails.getIsActive());
+        updateAppUser.setActive(appUserDetails.getActive());
         appUserRepository.save(updateAppUser);
         return updateAppUser;
     }
@@ -52,6 +52,7 @@ public class AppUserServiceImpl implements AppUserService {
     public void deleteUser(String user_id) {
         AppUser deleteAppUser = appUserRepository.findById(user_id)
                 .orElseThrow(() -> new ResourceNotFoundException("App User not found for given id" + user_id));
-        appUserRepository.delete(deleteAppUser);
+        deleteAppUser.setActive(false);
+        appUserRepository.save(deleteAppUser);
     }
 }

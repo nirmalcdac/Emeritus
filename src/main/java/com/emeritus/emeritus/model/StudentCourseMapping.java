@@ -47,8 +47,8 @@ public class StudentCourseMapping {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "is_active")
-    private String isActive;
+    @Column(name = "active")
+    private Boolean active;
 
     @JsonIgnore
     @Column(name = "created_by")

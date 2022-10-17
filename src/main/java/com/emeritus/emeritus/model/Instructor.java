@@ -38,9 +38,8 @@ public class Instructor {
     @JoinColumn(name = "user_id")
     private AppUser appUser;
 
-    @Column(name = "is_active")
-    private String isActive;
-
+    @Column(name = "active")
+    private Boolean active;
     @JsonIgnore
     @Column(name = "created_by")
     private String createdBy;

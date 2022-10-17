@@ -1,7 +1,7 @@
 package com.emeritus.emeritus.controller;
 
 import com.emeritus.emeritus.model.Student;
-import com.emeritus.emeritus.model.StudentCourseMapping;
+import com.emeritus.emeritus.service.SAMServiceImpl;
 import com.emeritus.emeritus.service.SCMServiceImpl;
 import com.emeritus.emeritus.service.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +17,12 @@ public class StudentController {
     @Autowired
     private final StudentServiceImpl studentService;
     private final SCMServiceImpl scmService;
+    private final SAMServiceImpl samService;
 
-    public StudentController(StudentServiceImpl studentService, SCMServiceImpl scmService) {
+    public StudentController(StudentServiceImpl studentService, SCMServiceImpl scmService, SAMServiceImpl samService) {
         this.studentService = studentService;
         this.scmService = scmService;
+        this.samService = samService;
     }
 
     @GetMapping("/student")
@@ -49,10 +51,5 @@ public class StudentController {
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable String studentId) {
         studentService.deleteStudent(studentId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @GetMapping("/studentCourseMapping")
-    public List<StudentCourseMapping> getAllStudentCourseMapping() {
-        return scmService.getAllStudentCourseMapping();
     }
 }

@@ -38,8 +38,8 @@ public class Assignment {
     @JoinColumn(name = "course_id")
     private Course course;
 
-    @Column(name = "is_active")
-    private String isActive;
+    @Column(name = "active")
+    private Boolean active;
 
     @JsonIgnore
     @Column(name = "created_by")

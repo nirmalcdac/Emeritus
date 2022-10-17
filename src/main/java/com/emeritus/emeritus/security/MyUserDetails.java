@@ -19,7 +19,7 @@ public class MyUserDetails implements UserDetails {
     public MyUserDetails(AppUser appUser) {
         this.userName = appUser.getUserName();
         this.password = appUser.getAppUserPassword();
-        this.active = Boolean.parseBoolean(appUser.getIsActive());
+        this.active = appUser.getActive();
         this.authorities = Arrays.stream(appUser.getAppUserRole().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());

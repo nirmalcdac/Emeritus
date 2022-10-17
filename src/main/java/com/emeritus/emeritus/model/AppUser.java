@@ -35,8 +35,8 @@ public class AppUser {
     @Column(name = "app_user_role")
     private String appUserRole;
 
-    @Column(name = "is_active")
-    private String isActive;
+    @Column(name = "active")
+    private Boolean active;
 
     @JsonIgnore
     @Column(name = "created_by")
